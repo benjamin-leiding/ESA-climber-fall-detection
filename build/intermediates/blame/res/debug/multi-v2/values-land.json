@@ -1,0 +1,38 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/lucahernandezacosta/PowerFolders/powerfolder/Uni-Sachen/Arbeit/Arbeit/FallDetector/Official_FallDetector_Repo/2018-paper-fall-detection/Fall_Detector/build/intermediates/incremental/mergeDebugResources/merged.dir/values-land/values-land.xml",
+            "map": [
+                {
+                    "source": "/Users/lucahernandezacosta/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/24b5fdcbb004f2950268b9104613d765/res/values-land/values-land.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "232"
+                    },
+                    "to": {
+                        "startLines": "6",
+                        "startColumns": "4",
+                        "startOffsets": "328",
+                        "endLines": "9",
+                        "endColumns": "12",
+                        "endOffsets": "505"
+                    }
+                },
+                {
+                    "source": "/Users/lucahernandezacosta/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/8796792a79029d8f0b0202c117daaac4/res/values-land/values-land.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,125,189,260",
+                        "endColumns": "69,63,70,67",
+                        "endOffsets": "120,184,255,323"
+                    }
+                }
+            ]
+        }
+    ]
+}

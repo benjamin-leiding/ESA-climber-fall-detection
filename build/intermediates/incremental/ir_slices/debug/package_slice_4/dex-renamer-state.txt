@@ -1,0 +1,4 @@
+#Sun Dec 02 15:15:57 CET 2018
+base.0=/Users/lucahernandezacosta/PowerFolders/powerfolder/Uni-Sachen/Arbeit/Arbeit/FallDetector/Official_FallDetector_Repo/2018-paper-fall-detection/Fall_Detector/build/intermediates/transforms/dexMerger/debug/4
+path.0=classes.dex
+renamed.0=classes.dex

@@ -1,0 +1,35 @@
+##############################
+EASIEST WAY!!!!
+
+If you are using Android Studio 3.0 or later version then follow these steps.
+
+Click View > Tool Windows > Device File Explorer.
+Expand /data/data/[package-name] nodes.
+##############################
+
+##############################
+MORE COMPLICATED!!!!
+
+Here are step-by-step instructions (mostly taken from a combination of the other answers). This works even on devices that are not rooted.
+
+Connect your device and launch the application in debug mode.
+
+adb command is located in /Library/Android/sdk/platform-tools
+You may want to use ./adb -d shell "run-as com.yourpackge.name ls /data/data/com.yourpackge.name/databases/" to see what the database filename is.
+Notice: com.yourpackge.name is your application package name. You can get it from the manifest file.
+
+Copy the database file from your application folder to your SD card.
+
+do not use: ./adb -d shell "run-as com.yourpackge.name cat /data/data/com.yourpackge.name/databases/filename.sqlite > /sdcard/filename.sqlite"
+instead use: ./adb -d shell "run-as com.yourpackge.name cp /data/data/com.yourpackge.name/databases/filename.sqlite /sdcard/filename.sqlite" !!!!!!! -> cp instead of cat else you'll get an empty file
+Notice: filename.sqlite is your database name you used when you created the database
+
+Pull the database files to your machine:
+
+adb pull /sdcard/filename.sqlite
+This will copy the database from the SD card to the place where your ADB exist.
+
+Install Firefox SQLite Manager: https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager/
+Open Firefox SQLite Manager (Tools->SQLite Manager) and open your database file from step 3 above.
+Enjoy!
+##############################

@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">FallDetection</string>
+    <string name="TapSense">Tap to start and stop sensing!</string>
+    <string name="tapme">Tap me!</string>
+    <string name="Thr">Threshold:</string>
+    <string name="BTM">Back To Main</string>
+    <string name="FD">Fall Duration (s):</string>
+    <string name="FDist">Fallen Distance (m):</string>
+    <string name="TD">Timer Duration (s):</string>
+    <string name="FDistAlarm">Distance to Alarm (m):</string>
+    <string name="Plot">Plot</string>
+    <string name="DelMainDB">Delete Main DB:</string>
+    <string name="Del">Delete</string>
+    <string name="DelAccAltDB">Delete Acc/Alt DB:</string>
+    <string name="NewDB">Create new Database:</string>
+    <string name="Create">Create</string>
+    <string name="title_activity_dbnames_list">DBNamesListActivity</string>
+</resources>
