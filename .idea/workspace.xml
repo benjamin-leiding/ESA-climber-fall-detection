@@ -6,7 +6,6 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="alti" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
@@ -38,24 +37,50 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="423">
-              <caret line="257" column="62" lean-forward="true" selection-start-line="257" selection-start-column="62" selection-end-line="257" selection-end-column="62" />
-              <folding>
-                <element signature="e#2094#2379#0" expanded="true" />
-                <element signature="e#2378#2379#0" expanded="true" />
-                <element signature="e#3276#3283#0" expanded="true" />
-                <element signature="e#3348#3355#0" expanded="true" />
-                <element signature="e#3416#3422#0" expanded="true" />
-                <element signature="e#3483#3490#0" expanded="true" />
-                <element signature="e#3555#3561#0" expanded="true" />
-                <element signature="e#25477#28504#0" expanded="true" />
-                <element signature="e#28503#28504#0" expanded="true" />
-                <element signature="e#30003#30705#0" expanded="true" />
-                <element signature="e#30704#30705#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="182">
+              <caret line="605" column="73" selection-start-line="605" selection-start-column="73" selection-end-line="605" selection-end-column="73" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DatabaseHelper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/DatabaseHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="496">
+              <caret line="54" column="138" selection-start-line="54" selection-start-column="124" selection-end-line="54" selection-end-column="138" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SettingsActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/SettingsActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="632">
+              <caret line="152" column="102" selection-start-line="152" selection-start-column="102" selection-end-line="152" selection-end-column="102" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_settings.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_settings.xml">
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="408">
+              <caret line="175" column="43" selection-start-line="175" selection-start-column="43" selection-end-line="175" selection-end-column="43" />
+            </state>
+          </provider>
+          <provider selected="true" editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="50" selection-start-line="4" selection-start-column="50" selection-end-line="4" selection-end-column="50" />
             </state>
           </provider>
         </entry>
@@ -66,7 +91,7 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-130" />
+            <state />
           </provider>
         </entry>
       </file>
@@ -80,8 +105,8 @@
       <file leaf-file-name="DBNamesListActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/DBNamesListActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+            <state relative-caret-position="27">
+              <caret line="33" column="34" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -89,17 +114,8 @@
       <file leaf-file-name="SetDBonStartChecker.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/SetDBonStartChecker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="15" selection-start-line="15" selection-end-line="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DatabaseHelper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/DatabaseHelper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="35" column="28" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
+            <state relative-caret-position="120">
+              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -112,16 +128,29 @@
       <find>altitude</find>
       <find>databaseNames</find>
       <find>updateDB</find>
-      <find>fallDuration</find>
       <find>fallDetectedTS</find>
       <find>kalman</find>
       <find>registerListener</find>
       <find>register</find>
-      <find>threshold</find>
       <find>highes</find>
       <find>Scannin</find>
       <find>&quot;Altitude:</find>
+      <find>dbNames</find>
+      <find>choose</find>
       <find>altitudeTimeStamps</find>
+      <find>accelerationTimeStamps</find>
+      <find>previousAverageAltitude</find>
+      <find>scan</find>
+      <find>Scanning</find>
+      <find>timeDifferenceBetweenFallEvents</find>
+      <find>timeDifferenceBetweenFallEvents</find>
+      <find>distanceToAlar</find>
+      <find>distanceToAlarm</find>
+      <find>backto</find>
+      <find>fallDuration</find>
+      <find>threshold_DetectingFallEvents</find>
+      <find>fallenDistance</find>
+      <find>threshold</find>
     </findStrings>
   </component>
   <component name="GenerateSignedApkSettings">
@@ -1367,12 +1396,16 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/lha/falldetection/SettingsActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/lha/falldetection/DBNamesListActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/lha/falldetection/DatabaseHelper.java" />
+        <option value="$PROJECT_DIR$/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/src/main/res/layout/activity_settings.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/lha/falldetection/MainActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/lha/falldetection/SettingsActivity.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="y" value="143" />
     <option name="width" value="1920" />
     <option name="height" value="1006" />
@@ -1404,7 +1437,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -1419,13 +1452,41 @@
             </path>
             <path>
               <item name="Fall_Detector" type="1abcf292:AndroidViewProjectNode" />
+              <item name="Fall_Detector" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="Fall_Detector" type="1abcf292:AndroidViewProjectNode" />
+              <item name="Fall_Detector" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="falldetection" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Fall_Detector" type="1abcf292:AndroidViewProjectNode" />
+              <item name="Fall_Detector" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+            </path>
+            <path>
+              <item name="Fall_Detector" type="1abcf292:AndroidViewProjectNode" />
+              <item name="Fall_Detector" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="drawable" type="ddeffd01:AndroidResFolderTypeNode" />
+            </path>
+            <path>
+              <item name="Fall_Detector" type="1abcf292:AndroidViewProjectNode" />
+              <item name="Fall_Detector" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="values" type="ddeffd01:AndroidResFolderTypeNode" />
+            </path>
+            <path>
+              <item name="Fall_Detector" type="1abcf292:AndroidViewProjectNode" />
               <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -1614,7 +1675,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="143" width="1920" height="1006" extended-state="1" />
+    <frame x="0" y="143" width="1920" height="1006" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="Android Profiler" order="7" sideWeight="0.49946752" weight="0.32993197" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32993197" />
@@ -1623,20 +1685,20 @@
       <window_info id="Build Variants" order="2" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.49893504" side_tool="true" weight="0.3283582" />
+      <window_info anchor="right" id="Preview" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32993197" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3283582" />
-      <window_info active="true" anchor="bottom" id="Logcat" order="7" sideWeight="0.77689034" visible="true" weight="0.3092551" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32731378" />
+      <window_info anchor="bottom" id="Logcat" order="7" sideWeight="0.77689034" weight="0.3295711" />
       <window_info id="Captures" order="2" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
       <window_info content_ui="combo" id="Project" order="0" weight="0.24973376" />
       <window_info anchor="bottom" id="Build" order="7" sideWeight="0.50106496" weight="0.3283582" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="right" id="Gradle" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="right" id="Device File Explorer" order="3" side_tool="true" visible="true" weight="0.32960597" />
+      <window_info anchor="right" id="Device File Explorer" order="3" side_tool="true" weight="0.32960597" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1645,60 +1707,92 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
     <layout-to-restore>
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" id="Device File Explorer" order="3" side_tool="true" visible="true" weight="0.32960597" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Gradle" order="5" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32993197" />
-      <window_info anchor="right" id="Theme Preview" order="6" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Logcat" order="7" weight="0.32879817" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24973376" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32993197" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.50106496" weight="0.3283582" />
+      <window_info id="Designer" order="2" />
       <window_info id="Build Variants" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
-      <window_info id="Designer" order="5" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32993197" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Android Profiler" order="8" sideWeight="0.49946752" weight="0.32993197" />
+      <window_info id="Favorites" order="5" side_tool="true" />
       <window_info id="Captures" order="6" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32879817" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Build" order="11" weight="0.3291714" />
       <window_info id="Capture Tool" order="7" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Android Profiler" order="12" visible="true" weight="0.32993197" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.49893504" side_tool="true" weight="0.3283582" />
+      <window_info anchor="right" id="Preview" order="0" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" id="Device File Explorer" order="5" side_tool="true" weight="0.32960597" />
+      <window_info active="true" anchor="bottom" id="Logcat" order="10" sideWeight="0.77689034" visible="true" weight="0.3295711" />
+      <window_info anchor="bottom" id="Version Control" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="12" weight="0.32731378" />
+      <window_info anchor="right" id="Gradle" order="6" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24973376" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32993197" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
     </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
+  </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3795">
+          <caret line="253" lean-forward="true" selection-start-line="253" selection-end-line="253" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/DBNamesListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/SetDBonStartChecker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/DatabaseHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="35" column="28" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9135">
           <caret line="609" column="83" selection-start-line="609" selection-start-column="48" selection-end-line="609" selection-end-column="83" />
-          <folding>
-            <element signature="e#2094#2379#0" expanded="true" />
-            <element signature="e#2378#2379#0" expanded="true" />
-            <element signature="e#3276#3283#0" expanded="true" />
-            <element signature="e#3348#3355#0" expanded="true" />
-            <element signature="e#3416#3422#0" expanded="true" />
-            <element signature="e#3483#3490#0" expanded="true" />
-            <element signature="e#3555#3561#0" expanded="true" />
-            <element signature="e#25477#28504#0" expanded="true" />
-            <element signature="e#28503#28504#0" expanded="true" />
-            <element signature="e#30003#30705#0" expanded="true" />
-            <element signature="e#30704#30705#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1755,19 +1849,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5715">
           <caret line="422" column="38" selection-start-line="422" selection-start-column="38" selection-end-line="422" selection-end-column="38" />
-          <folding>
-            <element signature="e#2094#2379#0" expanded="true" />
-            <element signature="e#2378#2379#0" expanded="true" />
-            <element signature="e#3276#3283#0" expanded="true" />
-            <element signature="e#3348#3355#0" expanded="true" />
-            <element signature="e#3416#3422#0" expanded="true" />
-            <element signature="e#3483#3490#0" expanded="true" />
-            <element signature="e#3555#3561#0" expanded="true" />
-            <element signature="e#25477#28504#0" expanded="true" />
-            <element signature="e#28503#28504#0" expanded="true" />
-            <element signature="e#30003#30705#0" expanded="true" />
-            <element signature="e#30704#30705#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1914,40 +1995,12 @@
     </entry>
     <entry file="file://$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/lge-nexus_5-08124cad0ae5a92c/data/data/com.lha.falldetection/files/databaseNames.txt" />
     <entry file="file://$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/nexus_5-0bb19cab0c59b49b/data/data/com.lha.falldetection/files/databaseNames.txt" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/SetDBonStartChecker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/SettingsActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1680">
-          <caret line="131" column="20" selection-start-line="131" selection-start-column="20" selection-end-line="131" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/DBNamesListActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/DatabaseHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="35" column="28" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/AndroidManifest.xml">
       <provider editor-type-id="android-manifest">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-130" />
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
@@ -1955,23 +2008,55 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/SetDBonStartChecker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/DBNamesListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="33" column="34" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="50" selection-start-line="4" selection-start-column="50" selection-end-line="4" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_settings.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="175" column="43" selection-start-line="175" selection-start-column="43" selection-end-line="175" selection-end-column="43" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/DatabaseHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="496">
+          <caret line="54" column="138" selection-start-line="54" selection-start-column="124" selection-end-line="54" selection-end-column="138" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="257" column="62" lean-forward="true" selection-start-line="257" selection-start-column="62" selection-end-line="257" selection-end-column="62" />
-          <folding>
-            <element signature="e#2094#2379#0" expanded="true" />
-            <element signature="e#2378#2379#0" expanded="true" />
-            <element signature="e#3276#3283#0" expanded="true" />
-            <element signature="e#3348#3355#0" expanded="true" />
-            <element signature="e#3416#3422#0" expanded="true" />
-            <element signature="e#3483#3490#0" expanded="true" />
-            <element signature="e#3555#3561#0" expanded="true" />
-            <element signature="e#25477#28504#0" expanded="true" />
-            <element signature="e#28503#28504#0" expanded="true" />
-            <element signature="e#30003#30705#0" expanded="true" />
-            <element signature="e#30704#30705#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="182">
+          <caret line="605" column="73" selection-start-line="605" selection-start-column="73" selection-end-line="605" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/lha/falldetection/SettingsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="632">
+          <caret line="152" column="102" selection-start-line="152" selection-start-column="102" selection-end-line="152" selection-end-column="102" />
         </state>
       </provider>
     </entry>

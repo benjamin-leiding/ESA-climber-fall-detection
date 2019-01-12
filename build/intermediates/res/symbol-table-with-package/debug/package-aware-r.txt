@@ -898,6 +898,9 @@ id pin
 id progress_circular
 id progress_horizontal
 id radio
+id radioButton1
+id radioButton2
+id radioButtonGroup
 id right
 id right_icon
 id right_side
@@ -1101,6 +1104,8 @@ string abc_searchview_description_voice
 string abc_shareactionprovider_share_with
 string abc_shareactionprovider_share_with_application
 string abc_toolbar_collapse_description
+string algo1str
+string algo2str
 string app_name
 string appbar_scrolling_view_behavior
 string bottom_sheet_behavior

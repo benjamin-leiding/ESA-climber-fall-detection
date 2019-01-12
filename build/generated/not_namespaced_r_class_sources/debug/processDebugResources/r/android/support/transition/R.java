@@ -106,21 +106,21 @@ public final class R {
         public static final int notification_main_column = 0x7f080072;
         public static final int notification_main_column_container = 0x7f080073;
         public static final int parent_matrix = 0x7f080078;
-        public static final int right_icon = 0x7f08007e;
-        public static final int right_side = 0x7f08007f;
-        public static final int save_image_matrix = 0x7f080080;
-        public static final int save_non_transition_alpha = 0x7f080081;
-        public static final int save_scale_type = 0x7f080082;
-        public static final int status_bar_latest_event_content = 0x7f0800a4;
-        public static final int text = 0x7f0800a8;
-        public static final int text2 = 0x7f0800a9;
-        public static final int time = 0x7f0800b4;
-        public static final int title = 0x7f0800b5;
-        public static final int transition_current_scene = 0x7f0800bc;
-        public static final int transition_layout_save = 0x7f0800bd;
-        public static final int transition_position = 0x7f0800be;
-        public static final int transition_scene_layoutid_cache = 0x7f0800bf;
-        public static final int transition_transform = 0x7f0800c0;
+        public static final int right_icon = 0x7f080081;
+        public static final int right_side = 0x7f080082;
+        public static final int save_image_matrix = 0x7f080083;
+        public static final int save_non_transition_alpha = 0x7f080084;
+        public static final int save_scale_type = 0x7f080085;
+        public static final int status_bar_latest_event_content = 0x7f0800a7;
+        public static final int text = 0x7f0800ab;
+        public static final int text2 = 0x7f0800ac;
+        public static final int time = 0x7f0800b7;
+        public static final int title = 0x7f0800b8;
+        public static final int transition_current_scene = 0x7f0800bf;
+        public static final int transition_layout_save = 0x7f0800c0;
+        public static final int transition_position = 0x7f0800c1;
+        public static final int transition_scene_layoutid_cache = 0x7f0800c2;
+        public static final int transition_transform = 0x7f0800c3;
     }
     public static final class integer {
         private integer() {}
@@ -150,7 +150,7 @@ public final class R {
     public static final class string {
         private string() {}
 
-        public static final int status_bar_notification_info_overflow = 0x7f0c0036;
+        public static final int status_bar_notification_info_overflow = 0x7f0c0038;
     }
     public static final class style {
         private style() {}

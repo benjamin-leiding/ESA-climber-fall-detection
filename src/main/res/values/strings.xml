@@ -2,7 +2,7 @@
     <string name="app_name">FallDetection</string>
     <string name="TapSense">Tap to start and stop sensing!</string>
     <string name="tapme">Tap me!</string>
-    <string name="Thr">Threshold:</string>
+    <string name="Thr">Threshold (m/s^2):</string>
     <string name="BTM">Back To Main</string>
     <string name="FD">Fall Duration (s):</string>
     <string name="FDist">Fallen Distance (m):</string>
@@ -15,4 +15,6 @@
     <string name="NewDB">Create new Database:</string>
     <string name="Create">Create</string>
     <string name="title_activity_dbnames_list">DBNamesListActivity</string>
+    <string name="algo1str">Algorithm 1</string>
+    <string name="algo2str">Algorithm 2</string>
 </resources>

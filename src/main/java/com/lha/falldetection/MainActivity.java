@@ -20,6 +20,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.Toast;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected static double fallenDistance = 0;
     protected static double timerDuration = 1;
     protected static double distanceToAlarm = 0.1;
+    protected static int fallDetectionAlgo = 1; //Checks which algorithm should be selected to detect fall events, by default algorithm 1 is used
 
     public Toast myToast;
     private Handler mHandler = new Handler(){
@@ -98,11 +100,26 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private boolean decreased = false;
     private float highestAltitude = 0;
     private float lowestAltitude = 0;
+
+    private int counter = 0;                                        //Counter used for 2nd algorithm to seperate sample blocks
+    public static double threshold_DetectingFallEvents = 0.4;    //This threshold is used to set what fall events should be detected in meters. E.g. 1 is only considers fall events that are bigger than 1 meter
+    public static double sampleRate = 5;                      //Sets Sample Rate at which the data is scanned from beginning to end. E.g. 30 means Blocks of 30 samples are compared step by step
+    public static double timeDifferenceBetweenFallEvents = 5; //Sets the minimal time difference between detected falls to prevent double detection in checking for validFallevents
+    public static List <Double> detectedFallEventsTimestamps = new ArrayList();
+    private double prevDetectedFall_CounterFlag = 0;
+    private double sum = 0;
+    private double currentAverageAltitude = 0;
+    private double previousAverageAltitude = 0;
+    private double highestAltitudeAlgo2 = 0;
+    private double lowestAltitudeAlgo2 = 0;
+
     private List<Float> listOfAltitudes = new ArrayList<Float>();
     private List<Float> listOfKalmanAltitudes = new ArrayList<Float>();
     private List<Long> altitudeTimeStamps = new ArrayList<Long>();
+    private List<Long> altitudeTimeStampsNano = new ArrayList<Long>();
     private List<Float> accelerationMeans = new ArrayList<Float>();
     private List<Long> accelerationTimeStamps = new ArrayList<Long>();
+    private List<Long> accelerationTimeStampsNano = new ArrayList<Long>();
 
 
     // kalman variables for altitude
@@ -135,8 +152,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.activity_main);
 
         PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-                "MyWakelockTag");
+        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "falldetector:WakelockTag");
 
 
         myToast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
@@ -184,8 +200,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             myDB = new DatabaseHelper(this, dbName);
         }
 
-        //myAltitudeDB = new DatabaseHelper(this);
-        //myAccDB = new DatabaseHelper(this);
+
     }
 
     private String createDBName() {
@@ -244,154 +259,366 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        //System.out.println("Type of sensor:" + sensorEvent.sensor.getType());
-        double altitude = 0;
-        if(sensorEvent.sensor.getType() == 6){
-            float alpha = 0.2f;
+        //Select the first algorithm to detect fall events
+        if(fallDetectionAlgo == 1) {
+            double altitude = 0;
+            if(sensorEvent.sensor.getType() == 6){
+                float alpha = 0.2f;
+
+                System.out.println("Altitude Pressure: " + sensorEvent.values[0]);
+                System.out.println("Altitude Atmosphere Pressure: " + SensorManager.PRESSURE_STANDARD_ATMOSPHERE);
+                System.out.println("Altitude: " + SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, (alpha * sensorEvent.values[0] + ((float)1 - alpha) * sensorEvent.values[0])));
+                altitudeText.setText("Altitude: " + SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, (alpha * sensorEvent.values[0] + ((float)1 - alpha) * sensorEvent.values[0])));
+                currentAltitude = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, (alpha * sensorEvent.values[0] + ((float)1 - alpha) * sensorEvent.values[0]));
 
 
+                Pc = P + varProcess;
+                G = Pc/(Pc + varVolt);    // kalman gain
+                P = (1-G)*Pc;
+                Xp = Xe;
+                Zp = Xp;
+                Xe = G*(currentAltitude - Zp) + Xp;   // the kalman estimate of the sensor voltage
+                //System.out.println(sensorReadings[i]);
+                System.out.println("Kalman Filtered: " + Xe);
+                altitudeText.setText("Altitude: " + Xe);
 
+                listOfAltitudes.add(currentAltitude);
+                listOfKalmanAltitudes.add(Xe);
+                altitudeTimeStamps.add(System.currentTimeMillis());
+                altitudeTimeStampsNano.add(System.nanoTime());
 
+                if (listOfKalmanAltitudes.size() > 3) {
+                    if (Xe > listOfKalmanAltitudes.get(listOfKalmanAltitudes.size() - 2)) {
+                        highestAltitude = Xe;
+                        mTapme.setBackgroundColor(Color.GREEN);
+                        System.out.println("Device is rising.");
+                        //fallFinished = false;
+                    } else {
 
-            System.out.println("Altitude Pressure: " + sensorEvent.values[0]);
-            System.out.println("Altitude Atmosphere Pressure: " + SensorManager.PRESSURE_STANDARD_ATMOSPHERE);
-            System.out.println("Altitude: " + SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, (alpha * sensorEvent.values[0] + ((float)1 - alpha) * sensorEvent.values[0])));
-            altitudeText.setText("Altitude: " + SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, (alpha * sensorEvent.values[0] + ((float)1 - alpha) * sensorEvent.values[0])));
-            currentAltitude = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, (alpha * sensorEvent.values[0] + ((float)1 - alpha) * sensorEvent.values[0]));
-
-
-            Pc = P + varProcess;
-            G = Pc/(Pc + varVolt);    // kalman gain
-            P = (1-G)*Pc;
-            Xp = Xe;
-            Zp = Xp;
-            Xe = G*(currentAltitude - Zp) + Xp;   // the kalman estimate of the sensor voltage
-            //System.out.println(sensorReadings[i]);
-            System.out.println("Kalman Filtered: " + Xe);
-            altitudeText.setText("Altitude: " + Xe);
-
-            listOfAltitudes.add(currentAltitude);
-            listOfKalmanAltitudes.add(Xe);
-            altitudeTimeStamps.add(System.currentTimeMillis());
-
-            if (listOfKalmanAltitudes.size() > 3) {
-                if (Xe > listOfKalmanAltitudes.get(listOfKalmanAltitudes.size() - 2)) {
-                    highestAltitude = Xe;
-                    mTapme.setBackgroundColor(Color.GREEN);
-                    System.out.println("Device is rising.");
-                    //fallFinished = false;
-                } else {
-
-                    mTapme.setBackgroundColor(Color.RED);
-                    System.out.println("Device is dropping.");
-                    if (fallFinished) {
-                        altiDiff = (highestAltitude - Xe);
-                        System.out.println("Altitude Difference in altimeter: " + altiDiff);
-                    }
-                }
-            }
-
-
-
-        }
-
-        if(btnStartStop && sensorEvent.sensor.getType() == 1){
-            xText.setText("X: " + sensorEvent.values[0]);
-            yText.setText("Y: " + sensorEvent.values[1]);
-            zText.setText("Z: " + sensorEvent.values[2]);
-
-            float x, y, z;
-            x = sensorEvent.values[0];
-            y = sensorEvent.values[1];
-            z = sensorEvent.values[2];
-            float mean = (Math.abs(x) + Math.abs(y) + Math.abs(z)) / 3; //(x + y + z) / 3;//
-            System.out.println("Acc Mean: " + mean);
-            accelerationMeans.add(mean);
-
-            double timeDiffNowAndRudeMvmt = (double)(System.currentTimeMillis() - rudeAccMovementTS) / 1000;
-            double timeDiffNowAndFallDetected = (double)(System.currentTimeMillis() - fallDetectedTS) / 1000;
-            System.out.println("Time Difference from Now to last rude movement: " + timeDiffNowAndRudeMvmt);
-            System.out.println("Time Difference from Now to detected fall: " + timeDiffNowAndFallDetected);
-
-            if (rudeMvmtAltitude != 0 && timeDiffNowAndRudeMvmt > 1) {
-                fallenDistance = rudeMvmtAltitude - currentAltitude;
-                System.out.println("fallen distance calculated by barometer: " + fallenDistance);
-
-                if(fallenDistance >= distanceToAlarm ) {
-
-                    myToast.setText("Fall Detected");
-                    myToast.show();
-                    myDB.insertData(fallenDistance, (double) currentAltitude, fallDuration, System.currentTimeMillis());
-                    System.out.println("DATABASENAME: " + myDB.DATABASE_NAME + ", fall inserted in DB");
-                    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                    Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-                    r.play();
-                    //Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                    //Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-                    //r.play();
-                }
-                rudeMvmtAltitude = 0;
-            }
-
-            if (mean > 7.5 && timeDiffNowAndRudeMvmt > 1) {
-                rudeMvmtAltitude = currentAltitude;
-                rudeAccMovementTS = System.currentTimeMillis();
-                myToast.setText("Scanning for Fall Events");
-                myToast.show();
-                System.out.println("Current Acc is too high. Rude movement detected!");
-
-
-
-                fallDetectedTS = Long.valueOf(0);
-
-            }
-
-
-            accelerationTimeStamps.add(System.currentTimeMillis());
-
-            if(!fallDetectedFlag) {
-                if (x <= threshold && x >= -threshold && y <= threshold && y >= -threshold && z <= threshold && z >= -threshold) {
-                    //btnStartStop = false;
-                    System.out.println("currentTime in millis: " + System.currentTimeMillis());
-                    System.out.println("firstNoFall in millis: " + firstNoFallTS);
-                    System.out.println("Time difference firstNoFall to current: " + (System.currentTimeMillis() - firstNoFallTS));
-                    System.out.println("First Detection => x: " + x + "y: " + y + "z: " + z);
-                    if(!(((System.currentTimeMillis() - firstNoFallTS) / 1000) < 0.5)) {
-                        try {
-                            //myToast.setText("Fall Detected");
-                            System.out.println("Fall Detected");
-                            //myToast.show();
-                            fallFinished = false;
-                            fallDetectedTS = System.currentTimeMillis();
-                            fallDetectedFlag = true;
-                            nofallDetectedFlag = false;
-                            highestAltitude = Xe;
-
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        mTapme.setBackgroundColor(Color.RED);
+                        System.out.println("Device is dropping.");
+                        if (fallFinished) {
+                            altiDiff = (highestAltitude - Xe);
+                            System.out.println("Altitude Difference in altimeter: " + altiDiff);
                         }
                     }
                 }
-            } else {
-                if (x <= threshold && x >= -threshold && y <= threshold && y >= -threshold && z <= threshold && z >= -threshold) {
-                    //Still falling
-                    System.out.println("Still Falling => x: " + x + "y: " + y + "z: " + z);
-                } else {
-                    if(!nofallDetectedFlag){
 
-                        nofallDetectedTS = System.currentTimeMillis();
-                        firstNoFallTS = nofallDetectedTS;
-                        nofallDetectedFlag = true;
-                        fallDetectedFlag = false;
 
-                    }
-                }
+
             }
 
+            if(btnStartStop && sensorEvent.sensor.getType() == 1){
+                xText.setText("X: " + sensorEvent.values[0]);
+                yText.setText("Y: " + sensorEvent.values[1]);
+                zText.setText("Z: " + sensorEvent.values[2]);
+
+                float x, y, z;
+                x = sensorEvent.values[0];
+                y = sensorEvent.values[1];
+                z = sensorEvent.values[2];
+                float mean = (Math.abs(x) + Math.abs(y) + Math.abs(z)) / 3; //(x + y + z) / 3;//
+                System.out.println("Acc Mean: " + mean);
+                accelerationMeans.add(mean);
+
+                double timeDiffNowAndRudeMvmt = (double)(System.currentTimeMillis() - rudeAccMovementTS) / 1000;
+                double timeDiffNowAndFallDetected = (double)(System.currentTimeMillis() - fallDetectedTS) / 1000;
+                System.out.println("Time Difference from Now to last rude movement: " + timeDiffNowAndRudeMvmt);
+                System.out.println("Time Difference from Now to detected fall: " + timeDiffNowAndFallDetected);
+
+                if (rudeMvmtAltitude != 0 && timeDiffNowAndRudeMvmt > 1) {
+                    fallenDistance = rudeMvmtAltitude - currentAltitude;
+                    fallDuration = fallDuration = calculateFallDuration(fallenDistance);
+                    System.out.println("fallen distance calculated by barometer: " + fallenDistance);
+
+                    if(fallenDistance >= distanceToAlarm ) {
+
+                        myToast.setText("Fall Detected");
+                        myToast.show();
+                        myDB.insertData(fallenDistance, (double) currentAltitude, fallDuration, System.currentTimeMillis());
+                        System.out.println("DATABASENAME: " + myDB.DATABASE_NAME + ", fall inserted in DB");
+                        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                        r.play();
+                        //Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                        //Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                        //r.play();
+                    }
+                    rudeMvmtAltitude = 0;
+                }
+
+                if (mean > 7.5 && timeDiffNowAndRudeMvmt > 1) {
+                    rudeMvmtAltitude = currentAltitude;
+                    rudeAccMovementTS = System.currentTimeMillis();
+                    myToast.setText("Scanning for Fall Events");
+                    myToast.show();
+                    System.out.println("Current Acc is too high. Rude movement detected!");
+
+
+
+                    fallDetectedTS = Long.valueOf(0);
+
+                }
+
+
+                accelerationTimeStamps.add(System.currentTimeMillis());
+                accelerationTimeStampsNano.add(System.nanoTime());
+
+                if(!fallDetectedFlag) {
+                    if (x <= threshold && x >= -threshold && y <= threshold && y >= -threshold && z <= threshold && z >= -threshold) {
+                        //btnStartStop = false;
+                        System.out.println("currentTime in millis: " + System.currentTimeMillis());
+                        System.out.println("firstNoFall in millis: " + firstNoFallTS);
+                        System.out.println("Time difference firstNoFall to current: " + (System.currentTimeMillis() - firstNoFallTS));
+                        System.out.println("First Detection => x: " + x + "y: " + y + "z: " + z);
+                        if(!(((System.currentTimeMillis() - firstNoFallTS) / 1000) < 0.5)) {
+                            try {
+                                //myToast.setText("Fall Detected");
+                                System.out.println("Fall Detected");
+                                //myToast.show();
+                                fallFinished = false;
+                                fallDetectedTS = System.currentTimeMillis();
+                                fallDetectedFlag = true;
+                                nofallDetectedFlag = false;
+                                highestAltitude = Xe;
+
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                } else {
+                    if (x <= threshold && x >= -threshold && y <= threshold && y >= -threshold && z <= threshold && z >= -threshold) {
+                        //Still falling
+                        System.out.println("Still Falling => x: " + x + "y: " + y + "z: " + z);
+                    } else {
+                        if(!nofallDetectedFlag){
+
+                            nofallDetectedTS = System.currentTimeMillis();
+                            firstNoFallTS = nofallDetectedTS;
+                            nofallDetectedFlag = true;
+                            fallDetectedFlag = false;
+
+                        }
+                    }
+                }
+
+
+            }
+        } else if(fallDetectionAlgo == 2) {
+
+            if(sensorEvent.sensor.getType() == 6){
+                float alpha = 0.2f;
+
+                System.out.println("Altitude Pressure: " + sensorEvent.values[0]);
+                System.out.println("Altitude Atmosphere Pressure: " + SensorManager.PRESSURE_STANDARD_ATMOSPHERE);
+                System.out.println("Altitude: " + SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, (alpha * sensorEvent.values[0] + ((float)1 - alpha) * sensorEvent.values[0])));
+                altitudeText.setText("Altitude: " + SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, (alpha * sensorEvent.values[0] + ((float)1 - alpha) * sensorEvent.values[0])));
+                currentAltitude = SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, (alpha * sensorEvent.values[0] + ((float)1 - alpha) * sensorEvent.values[0]));
+
+
+                Pc = P + varProcess;
+                G = Pc/(Pc + varVolt);    // kalman gain
+                P = (1-G)*Pc;
+                Xp = Xe;
+                Zp = Xp;
+                Xe = G*(currentAltitude - Zp) + Xp;   // the kalman estimate of the sensor voltage
+                //System.out.println(sensorReadings[i]);
+                System.out.println("Kalman Filtered: " + Xe);
+                altitudeText.setText("Altitude: " + Xe);
+
+                listOfAltitudes.add(currentAltitude);
+                listOfKalmanAltitudes.add(Xe);
+                altitudeTimeStamps.add(System.currentTimeMillis());
+                altitudeTimeStampsNano.add(System.nanoTime());
+
+                if (listOfKalmanAltitudes.size() > 3) {
+                    if (Xe > listOfKalmanAltitudes.get(listOfKalmanAltitudes.size() - 2)) {
+                        highestAltitude = Xe;
+                        mTapme.setBackgroundColor(Color.GREEN);
+                        System.out.println("Device is rising.");
+                        //fallFinished = false;
+                    } else {
+
+                        mTapme.setBackgroundColor(Color.RED);
+                        System.out.println("Device is dropping.");
+                        if (fallFinished) {
+                            altiDiff = (highestAltitude - Xe);
+                            System.out.println("Altitude Difference in altimeter: " + altiDiff);
+                        }
+                    }
+                }
+
+                if (counter != 0 && counter % sampleRate == 0) {
+                    currentAverageAltitude = sum / sampleRate;
+                    //System.out.println("Counter: " + counter);
+                    //System.out.println("unfilteredAltitudes: " + unfilteredAltitudes.get(counter));
+                    //System.out.println("highestAltitude: " + highestAltitude);
+                    //System.out.println("lowestAltitude: " + lowestAltitude);
+                    //System.out.println("currentAverageAltitude: " + currentAverageAltitude);
+                    sum = 0;
+
+                    //The next 30th value has to be put here, otherwise it will not be considered
+                    sum += currentAltitude;
+
+                    if (previousAverageAltitude == 0) {
+                        previousAverageAltitude = currentAverageAltitude;
+                        highestAltitudeAlgo2 = currentAverageAltitude;
+                        lowestAltitudeAlgo2 = currentAverageAltitude;
+                    }
+
+                    if (currentAverageAltitude <= previousAverageAltitude) {
+
+                        if (previousAverageAltitude > highestAltitudeAlgo2) {
+                            highestAltitudeAlgo2 = previousAverageAltitude;
+                        }
+
+                        if (currentAverageAltitude < lowestAltitudeAlgo2) {
+                            lowestAltitudeAlgo2 = currentAverageAltitude;
+                        }
+
+                        previousAverageAltitude = currentAverageAltitude;
+
+
+                    } else if(currentAverageAltitude > previousAverageAltitude) {
+
+                        if (currentAverageAltitude > highestAltitudeAlgo2) {
+                            highestAltitudeAlgo2 = currentAverageAltitude;
+                        }
+
+                        previousAverageAltitude = currentAverageAltitude;
+
+                        double altitudeDifference = highestAltitudeAlgo2 - lowestAltitudeAlgo2;
+                        //System.out.println("highestAltitude: " + highestAltitude);
+                        //System.out.println("lowestAltitude: " + lowestAltitude);
+
+                        if (altitudeDifference > threshold_DetectingFallEvents) {
+
+                            if (prevDetectedFall_CounterFlag == 0) {
+
+                                prevDetectedFall_CounterFlag = currentAltitude;
+                                double time = (double)altitudeTimeStamps.get(altitudeTimeStamps.size() - 1);
+                                detectedFallEventsTimestamps.add(time);
+                                double alti = currentAltitude;
+                                //System.out.println(highestAltitude - unfilteredAltitudes.get(counter));
+                                System.out.println("Fall Detected!");
+                                System.out.printf("%.0f\t%.12f\n", time, alti);
+                                fallenDistance = altitudeDifference;
+                                fallDuration = calculateFallDuration(fallenDistance);
+
+                                if(altitudeDifference > distanceToAlarm) {
+                                    myToast.setText("Fall Detected");
+                                    myToast.show();
+                                    myDB.insertData(altitudeDifference, (double) currentAltitude, fallDuration, altitudeTimeStamps.get(altitudeTimeStamps.size() - 1));
+                                    System.out.println("DATABASENAME: " + myDB.DATABASE_NAME + ", fall inserted in DB");
+                                    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                                    Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                                    r.play();
+                                }
+
+
+                            } else if ( isValidFallEvent((double)altitudeTimeStamps.get(altitudeTimeStamps.size() - 1) ) ) {
+                                prevDetectedFall_CounterFlag = currentAltitude;
+                                //System.out.println("Fall Detected ID: " + (counter + 1) + "; Timestamp: " + unfilteredTimestamps.get(counter) + "; Altitude: " + unfilteredAltitudes.get(counter));
+                                //System.out.println(counter);
+                                //System.out.println(unfilteredTimestamps.get(counter) + "\t" + unfilteredAltitudes.get(counter));
+                                double time = (double)altitudeTimeStamps.get(altitudeTimeStamps.size() - 1);
+                                detectedFallEventsTimestamps.add(time);
+                                double alti = currentAltitude;
+                                //System.out.println(highestAltitude - unfilteredAltitudes.get(counter));
+                                System.out.println("Fall Detected!");
+                                System.out.printf("%.0f\t%.12f\n", time, alti);
+                                fallenDistance = altitudeDifference;
+                                fallDuration = calculateFallDuration(fallenDistance);
+
+                                if(altitudeDifference > distanceToAlarm) {
+                                    myToast.setText("Fall Detected");
+                                    myToast.show();
+                                    myDB.insertData(altitudeDifference, (double) currentAltitude, fallDuration, altitudeTimeStamps.get(altitudeTimeStamps.size() - 1));
+                                    System.out.println("DATABASENAME: " + myDB.DATABASE_NAME + ", fall inserted in DB");
+                                    Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                                    Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+                                    r.play();
+                                }
+                            }
+
+
+
+
+                        }
+
+                        previousAverageAltitude = 0;
+                        highestAltitudeAlgo2 = 0;
+                        lowestAltitudeAlgo2 = 0;
+
+
+
+                    }
+
+                } else {
+                    sum += currentAltitude;
+                }
+
+                counter++;
+
+
+
+            }
+
+            if(btnStartStop && sensorEvent.sensor.getType() == 1) {
+                xText.setText("X: " + sensorEvent.values[0]);
+                yText.setText("Y: " + sensorEvent.values[1]);
+                zText.setText("Z: " + sensorEvent.values[2]);
+
+                float x, y, z;
+                x = sensorEvent.values[0];
+                y = sensorEvent.values[1];
+                z = sensorEvent.values[2];
+                float mean = (Math.abs(x) + Math.abs(y) + Math.abs(z)) / 3; //(x + y + z) / 3;//
+                System.out.println("Acc Mean: " + mean);
+                accelerationMeans.add(mean);
+
+                double timeDiffNowAndRudeMvmt = (double) (System.currentTimeMillis() - rudeAccMovementTS) / 1000;
+                double timeDiffNowAndFallDetected = (double) (System.currentTimeMillis() - fallDetectedTS) / 1000;
+                System.out.println("Time Difference from Now to last rude movement: " + timeDiffNowAndRudeMvmt);
+                System.out.println("Time Difference from Now to detected fall: " + timeDiffNowAndFallDetected);
+
+                if (mean > 7.5 && timeDiffNowAndRudeMvmt > 1) {
+                    rudeMvmtAltitude = currentAltitude;
+                    rudeAccMovementTS = System.currentTimeMillis();
+                    myToast.setText("Scanning for Fall Events");
+                    myToast.show();
+                    System.out.println("Current Acc is too high. Rude movement detected!");
+
+                    fallDetectedTS = Long.valueOf(0);
+
+                }
+
+            }
 
         }
 
+
+    }
+
+    private double calculateFallDuration(double fallenDistance) {
+        double durationInSec = Math.sqrt(fallenDistance / 0.5 / 9.80665);
+        return durationInSec;
+    }
+
+    /** Compare Detected Fall Event Timestamps with new assumed Fall event to prevent multiple detections with the same fall event **/
+    public static boolean isValidFallEvent(Double ts) {
+
+        for (int i = 0; i < detectedFallEventsTimestamps.size(); i++) {
+
+            if (Math.abs((detectedFallEventsTimestamps.get(i) - ts) / 1000) < timeDifferenceBetweenFallEvents) {
+                return false;
+            }
+
+        }
+
+        return true;
     }
 
     @Override
@@ -467,7 +694,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     for (int i = 0; i < accelerationTimeStamps.size(); i ++) {
                         ContentValues contentValues = new ContentValues();
                         long result = 0;
-                        contentValues.put("Timestamp", accelerationTimeStamps.get(i));
+                        contentValues.put("TimestampMilli", accelerationTimeStamps.get(i));
+                        contentValues.put("TimestampNano", accelerationTimeStampsNano.get(i));
                         contentValues.put("Acceleration_Means", accelerationMeans.get(i));
                         result = myAccDB.getWritableDatabase().insert("Acceleration", null, contentValues);
                     }
@@ -481,10 +709,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     for(int i = 0; i < listOfAltitudes.size(); i++) {
                         ContentValues contentValues = new ContentValues();
                         long result = 0;
-                        contentValues.put("Timestamp", altitudeTimeStamps.get(i));
+                        contentValues.put("TimestampMilli", altitudeTimeStamps.get(i));
+                        contentValues.put("TimestampNano", altitudeTimeStampsNano.get(i));
                         contentValues.put("Altitude_inMeter", listOfAltitudes.get(i));
                         result = myAltitudeDB.getWritableDatabase().insert("Altitude", null, contentValues);
-                        //myAltitudeDB.insertData("Altitude", altitudeTimeStamps.get(i), listOfAltitudes.get(i));
                     }
                     myAltitudeDB.getWritableDatabase().setTransactionSuccessful();
                     myAltitudeDB.getWritableDatabase().endTransaction();
@@ -496,10 +724,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     for(int i = 0; i < listOfKalmanAltitudes.size(); i++) {
                         ContentValues contentValues = new ContentValues();
                         long result = 0;
-                        contentValues.put("Timestamp", altitudeTimeStamps.get(i));
+                        contentValues.put("TimestampMilli", altitudeTimeStamps.get(i));
+                        contentValues.put("TimestampNano", altitudeTimeStampsNano.get(i));
                         contentValues.put("Altitude_inMeter", listOfKalmanAltitudes.get(i));
                         result = myKalmanAltitudeDB.getWritableDatabase().insert("KalmanAltitude", null, contentValues);
-                        //myAltitudeDB.insertData("Altitude", altitudeTimeStamps.get(i), listOfAltitudes.get(i));
                     }
                     myKalmanAltitudeDB.getWritableDatabase().setTransactionSuccessful();
                     myKalmanAltitudeDB.getWritableDatabase().endTransaction();
@@ -513,20 +741,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             };
             Thread sensorDBinsertThread = new Thread(run);
             sensorDBinsertThread.start();
-
-
-
-            /*
-            for(int i = 0; i < listOfAltitudes.size(); i++) {
-                //System.out.println(listOfAltitudes.get(i));
-                //myAltitudeDB.insertData("Altitude", altitudeTimeStamps.get(i), listOfAltitudes.get())
-                Log.d("AltitudeTag", "Altitude: " + Float.toString(listOfAltitudes.get(i)));
-                Log.d("KalmanAltitudeTag", "KalmanAltitude: " + Float.toString(listOfKalmanAltitudes.get(i)));
-                Log.d("AccelerationMeansTag", "AccelerationMeans: " + Float.toString(accelerationMeans.get(i)));
-                Log.d("AccelerationTimestamp", "AccelerationTimestamp: " + Float.toString(accelerationTimeStamps.get(i)));
-                Log.d("AltitudeTimestamp", "AltitudeTimestamp: " + Float.toString(altitudeTimeStamps.get(i)));
-
-            }*/
 
             wakeLock.release();
             SM.unregisterListener(this);

@@ -42,6 +42,7 @@
         android:layout_width="101dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:editable="false"
         android:ems="10"
         android:inputType="text"
         android:textAppearance="@android:style/TextAppearance.Material.Small"
@@ -145,6 +146,37 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
+
+    <RadioGroup
+        android:id="@+id/radioButtonGroup"
+        android:layout_width="238dp"
+        android:layout_height="39dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button5"
+        app:layout_constraintVertical_bias="0.0">
+
+        <RadioButton
+            android:id="@+id/radioButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/algo1str"
+            android:onClick="onRadioButtonClicked"/>
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/algo2str"
+            android:onClick="onRadioButtonClicked"/>
+
+    </RadioGroup>
 
     <!--TextView
         android:id="@+id/textView7"

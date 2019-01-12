@@ -51,9 +51,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("create table " + TABLE_NAME + " (" + COL_1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_2 + " DOUBLE, " + COL_3 + " DOUBLE, " + COL_4 + " DOUBLE, " + COL_5 + " BIGINT); ");
-        sqLiteDatabase.execSQL("create table " + "Altitude" + " (" + "ID" + " INTEGER PRIMARY KEY AUTOINCREMENT, " + "Timestamp" + " BIGINT, " + "Altitude_inMeter" + " DOUBLE); ");
-        sqLiteDatabase.execSQL("create table " + "KalmanAltitude" + " (" + "ID" + " INTEGER PRIMARY KEY AUTOINCREMENT, " + "Timestamp" + " BIGINT, " + "Altitude_inMeter" + " DOUBLE); ");
-        sqLiteDatabase.execSQL("create table " + "Acceleration" + " (" + "ID" + " INTEGER PRIMARY KEY AUTOINCREMENT, " + "Timestamp" + " BIGINT, " + "Acceleration_Means" + " DOUBLE); ");
+        sqLiteDatabase.execSQL("create table " + "Altitude" + " (" + "ID" + " INTEGER PRIMARY KEY AUTOINCREMENT, " + "TimestampMilli" + " BIGINT, " + "TimestampNano" + " BIGINT, " + "Altitude_inMeter" + " DOUBLE); ");
+        sqLiteDatabase.execSQL("create table " + "KalmanAltitude" + " (" + "ID" + " INTEGER PRIMARY KEY AUTOINCREMENT, " + "TimestampMilli" + " BIGINT, " + "TimestampNano" + " BIGINT, " + "Altitude_inMeter" + " DOUBLE); ");
+        sqLiteDatabase.execSQL("create table " + "Acceleration" + " (" + "ID" + " INTEGER PRIMARY KEY AUTOINCREMENT, " + "TimestampMilli" + " BIGINT, " + "TimestampNano" + " BIGINT, " + "Acceleration_Means" + " DOUBLE); ");
     }
 
     @Override

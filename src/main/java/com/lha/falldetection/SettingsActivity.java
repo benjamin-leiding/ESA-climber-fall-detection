@@ -2,12 +2,15 @@ package com.lha.falldetection;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +30,8 @@ public class SettingsActivity extends AppCompatActivity {
     private EditText fallDuration;
     private EditText fallenDistance;
     private EditText distanceToAlarm;
+    private RadioButton algo1;
+    private RadioButton algo2;
     private CheckBox deleteMainDB;
     private CheckBox deleteAccAltDB;
     private CheckBox createNewDB;
@@ -41,20 +46,39 @@ public class SettingsActivity extends AppCompatActivity {
 
         errorToast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
 
+        EditText fallenDurance = (EditText)findViewById(R.id.editTextFD);
+        fallenDurance.setTag(fallenDurance.getKeyListener());
+        fallenDurance.setKeyListener(null);
+
+        EditText fallenDistance = (EditText)findViewById(R.id.editTextFDist);
+        fallenDistance.setTag(fallenDistance.getKeyListener());
+        fallenDistance.setKeyListener(null);
+
+        algo1 = (RadioButton)findViewById(R.id.radioButton1);
+        algo2 = (RadioButton)findViewById(R.id.radioButton2);
+        if(MainActivity.fallDetectionAlgo == 1) {
+            System.out.println("MainActivity.fallDetectionAlgo == 1: " + MainActivity.fallDetectionAlgo);
+            algo1.toggle();
+            radioButton1Selected();
+        } else if(MainActivity.fallDetectionAlgo == 2) {
+            System.out.println("MainActivity.fallDetectionAlgo == 2: " + MainActivity.fallDetectionAlgo);
+            algo2.toggle();
+            radioButton2Selected();
+        }
+
         distanceToAlarm = (EditText)findViewById(R.id.editTextDistToAlarm);
         System.out.println(MainActivity.distanceToAlarm);
         String distToAlarm = String.valueOf(MainActivity.distanceToAlarm);
         distanceToAlarm.setText(distToAlarm);
 
-        threshold = (EditText)findViewById(R.id.editTextTHR);
-        System.out.println(MainActivity.threshold);
-        String thr = String.valueOf(MainActivity.threshold);
-        threshold.setText(thr);
-
         fallDuration = (EditText)findViewById(R.id.editTextFD);
         fallDuration.setText(String.valueOf(MainActivity.fallDuration));
         fallenDistance = (EditText)findViewById(R.id.editTextFDist);
         fallenDistance.setText(String.valueOf(MainActivity.fallenDistance));
+
+
+
+
         //timerDuration = (EditText)findViewById(R.id.editTextTimer);
         //timerDuration.setText(String.valueOf(MainActivity.timerDuration));
         mHelper = new DatabaseHelper(this);
@@ -62,23 +86,111 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
+    public void onRadioButtonClicked(View v){
+        RadioGroup rg = (RadioGroup) findViewById(R.id.radioButtonGroup);
+        RadioButton rb_algo1 = (RadioButton) findViewById(R.id.radioButton1);
+        RadioButton rb_algo2 = (RadioButton) findViewById(R.id.radioButton2);
+
+        // Is the current Radio Button checked?
+        boolean checked = ((RadioButton) v).isChecked();
+
+        switch(v.getId()){
+            case R.id.radioButton1:
+                if(checked)
+                    radioButton1Selected();
+                    break;
+
+            case R.id.radioButton2:
+                if(checked)
+                    radioButton2Selected();
+                    break;
+        }
+    }
+
+    public void radioButton1Selected() {
+        //Saving previous state of threshold
+        threshold = (EditText)findViewById(R.id.editTextTHR);
+        distanceToAlarm= (EditText)findViewById(R.id.editTextDistToAlarm);
+        System.out.println("Threshold string: " + threshold.getText());
+        if(threshold.getText().toString().equals("") || distanceToAlarm.getText().toString().equals("")){
+            //Just do nothing
+            System.out.println("Threshold string if: " + threshold.getText());
+        } else {
+            MainActivity.threshold_DetectingFallEvents = Double.parseDouble(threshold.getText().toString());
+            MainActivity.distanceToAlarm = Double.parseDouble(distanceToAlarm.getText().toString());
+        }
+
+        RadioButton rb_algo1 = (RadioButton) findViewById(R.id.radioButton1);
+        RadioButton rb_algo2 = (RadioButton) findViewById(R.id.radioButton2);
+        rb_algo1.setTextColor(Color.RED);
+        rb_algo2.setTextColor(Color.GRAY);
+
+        TextView thresholdTextView = (TextView)findViewById(R.id.textView3);
+        thresholdTextView.setText("Threshold (m/s^2):");
+
+        threshold = (EditText)findViewById(R.id.editTextTHR);
+        System.out.println(MainActivity.threshold);
+        String thrHold = String.valueOf(MainActivity.threshold);
+        threshold.setText(thrHold);
+
+        EditText thr = (EditText)findViewById(R.id.editTextTHR);
+        thr.setText(String.valueOf(MainActivity.threshold));
+
+        TextView distToAlarm = (TextView)findViewById(R.id.textView6);
+        distToAlarm.setText("Distance to Alarm (m):");
+    }
+
+    public void radioButton2Selected() {
+        //Saving previous state of threshold
+        threshold = (EditText)findViewById(R.id.editTextTHR);
+        distanceToAlarm= (EditText)findViewById(R.id.editTextDistToAlarm);
+        System.out.println("Threshold string: " + threshold.getText());
+        if(threshold.getText().toString().equals("") || distanceToAlarm.getText().toString().equals("")){
+            //Just do nothing
+            System.out.println("Threshold string if: " + threshold.getText());
+        } else {
+            MainActivity.threshold = Double.parseDouble(threshold.getText().toString());
+            MainActivity.distanceToAlarm = Double.parseDouble(distanceToAlarm.getText().toString());  
+        }
+
+        RadioButton rb_algo1 = (RadioButton) findViewById(R.id.radioButton1);
+        RadioButton rb_algo2 = (RadioButton) findViewById(R.id.radioButton2);
+        rb_algo2.setTextColor(Color.RED);
+        rb_algo1.setTextColor(Color.GRAY);
+
+        TextView thresholdTextView = (TextView)findViewById(R.id.textView3);
+        thresholdTextView.setText("Threshold (m):");
+
+        threshold = (EditText)findViewById(R.id.editTextTHR);
+        System.out.println(MainActivity.threshold_DetectingFallEvents);
+        String thrHold = String.valueOf(MainActivity.threshold_DetectingFallEvents);
+        threshold.setText(thrHold);
+
+        EditText thr = (EditText)findViewById(R.id.editTextTHR);
+        thr.setText(String.valueOf(MainActivity.threshold_DetectingFallEvents));
+
+        TextView distToAlarm = (TextView)findViewById(R.id.textView6);
+        distToAlarm.setText("Distance to Alarm (m):");
+    }
 
     public void backToMainBtnTap(View v) {
         System.out.println("backToMainBtnTap");
         double newTHR;
         double newDistToAlarm;
+        int selectedAlgo = 0;
         double newTimer;
         boolean checkBox1;
         boolean checkBox2;
         boolean checkBox3;
 
-        //deleteMainDB = findViewById(R.id.checkBox1);
-        //deleteAccAltDB = findViewById(R.id.checkBox2);
-        //createNewDB = findViewById(R.id.checkBox3);
-
         try {
             newTHR = Double.parseDouble(String.valueOf(threshold.getText()));
             newDistToAlarm = Double.parseDouble(String.valueOf(distanceToAlarm.getText()));
+            if(algo1.isChecked()) {
+                selectedAlgo = 1;
+            } else if(algo2.isChecked()) {
+                selectedAlgo = 2;
+            }
             //checkBox1 = deleteMainDB.isChecked();
             //checkBox2 = deleteAccAltDB.isChecked();
             //checkBox3 = createNewDB.isChecked();
@@ -88,14 +200,15 @@ public class SettingsActivity extends AppCompatActivity {
             errorToast.show();
             return;
         }
-        MainActivity.threshold = newTHR;
-        MainActivity.distanceToAlarm = newDistToAlarm;
-        //MainActivity.timerDuration = newTimer;
 
-        /**if(checkBox1 || checkBox2 || checkBox3) {
-         System.out.println("Check the boxes: " + checkBox1 + checkBox2 + checkBox3);
-         updateDB(checkBox1, checkBox2, checkBox3);
-         }**/
+        if(selectedAlgo == 1) {
+            MainActivity.threshold = newTHR;
+        } else if (selectedAlgo == 2) {
+            MainActivity.threshold_DetectingFallEvents = newTHR;
+        }
+
+        MainActivity.distanceToAlarm = newDistToAlarm;
+        MainActivity.fallDetectionAlgo = selectedAlgo;
 
         Intent backToMain = new Intent (SettingsActivity.this, MainActivity.class);
         startActivity(backToMain);

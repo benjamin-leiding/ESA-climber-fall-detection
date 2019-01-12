@@ -20,14 +20,7 @@ public class DBNamesListActivity extends ListActivity {
 
     private static String[] dbNames = new String[] {
 
-            "Afghanistan", "Albania", "Algeria", "American Samoa",
-            "Andorra", "Angola", "Anguilla", "Antarctica",
-            "Antigua and Barbuda", "Argentina", "Armenia", "Aruba",
-            "Australia", "Austria", "Azerbaijan", "Bahrain",
-            "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize",
-            "Benin", "Bermuda", "Bhutan", "Bolivia",
-            "Bosnia and Herzegovina", "Botswana", "Bouvet Island",
-            "Brazil", "British Indian Ocean Territory"
+            "Sample", "Data"
     };
 
     /** Called when the activity is first created. */
